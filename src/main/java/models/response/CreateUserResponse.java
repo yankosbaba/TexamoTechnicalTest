@@ -9,7 +9,8 @@ public class CreateUserResponse {
 
     public CreateUserResponse(){}
 
-    public CreateUserResponse(String name, String email, String gender, String status) {
+    public CreateUserResponse(int id, String name, String email, String gender, String status) {
+        this.id=id;
         this.name = name;
         this.email = email;
         this.gender = gender;

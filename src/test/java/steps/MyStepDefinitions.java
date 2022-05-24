@@ -27,7 +27,7 @@ public class MyStepDefinitions {
         client = new GoHttpClient();
         client.setupHTTPBuilder();
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json; charset=utf-8");
         headers.put("Authorization", "Bearer a6c03b914ed0f0e83142630a873cbaa33fd6bf65b838009ceac7deea9a552d45");
         client.addHeaders(headers);
     }
@@ -35,14 +35,12 @@ public class MyStepDefinitions {
         Random r = new Random();
         email +=  r.nextInt(1000000) + "@gmail.com";
         requestObject = new CreateUserRequest("Michael Adedeji",email, "male", "active" );
-        String mystr =  jsonConverter.convertToJsonString(requestObject);
-        return mystr;
+        return jsonConverter.convertToJsonString(requestObject);
     }
 
     public String setUserRequestBodyResend(){
         requestObject = new CreateUserRequest("Michael Adedeji",email, "male", "active" );
-        String mystr =  jsonConverter.convertToJsonString(requestObject);
-        return mystr;
+        return jsonConverter.convertToJsonString(requestObject);
     }
 
     public String setUserRequestBodyInvalid(){
@@ -82,7 +80,7 @@ public class MyStepDefinitions {
     public void validateResponse(int statusCode){
         Assert.assertEquals( statusCode , response.statusCode());
         if(response.statusCode() == 201){
-            CreateUserResponse userResponse = (CreateUserResponse) response.body();
+            CreateUserResponse userResponse = jsonConverter.deserializeCreateUserResponse(response.body().toString());
             Assert.assertEquals(userResponse.getEmail(), requestObject.getEmail());
             Assert.assertEquals(userResponse.getGender(), requestObject.getGender());
             Assert.assertEquals(userResponse.getName(), requestObject.getName());
