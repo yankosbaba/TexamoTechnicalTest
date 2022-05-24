@@ -32,7 +32,7 @@ public class GoHttpClient {
 
     public void addHeaders(Map<String, String> header){
         for (Map.Entry<String, String> entry: header.entrySet()){
-            builder.header(entry.getKey(), entry.getKey());
+            builder.header(entry.getKey(), entry.getValue());
         }
     }
     public void addPostMethod(String body){
